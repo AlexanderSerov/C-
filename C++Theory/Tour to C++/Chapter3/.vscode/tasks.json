@@ -1,0 +1,27 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build active file",
+            "command": "cl.exe",
+            "args": [
+                "/std:c++latest",
+                "/experimental:module",
+                "/MD",
+                "/module:search .",
+                "/Zc:__cplusplus",
+                //"/Zi",                      // Generates complete debugging information.
+                "/EHa",
+                "/Fe:Chapter3.exe",             //Name of executable
+                "${fileDirname}\\bezierMath.ixx",
+                "${fileDirname}\\Foo.ixx",
+                "${fileDirname}\\${fileBasenameNoExtension}.cpp"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

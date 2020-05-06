@@ -1,0 +1,19 @@
+
+Dump of file bezierCurve.exe
+
+File Type: EXECUTABLE IMAGE
+
+  Image has the following dependencies:
+
+    freeglut.dll
+    bezierMath.dll
+    GLU32.dll
+    OPENGL32.dll
+    KERNEL32.dll
+
+  Summary
+
+        2000 .data
+       11000 .rdata
+        3000 .reloc
+       30000 .text

@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build active file",
+            "command": "cl.exe",
+            "args": [
+                "/std:c++17",
+                "/Zc:__cplusplus",
+                "/Zi",                      // Generates complete debugging information.
+                "/EHsc",
+                "${fileDirname}\\${fileBasenameNoExtension}.cpp",
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

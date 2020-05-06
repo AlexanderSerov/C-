@@ -1,0 +1,33 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build active file",
+            "command": "cl.exe",
+            "args": [
+                //"/std:c++latest",
+                //"/experimental:module",
+                //"/MD",
+                //"/module:search .",
+                //"/Zc:__cplusplus",
+                //"/Zi",                      // Generates complete debugging information.
+                "/EHa",
+                // /I Stands for specifing directory for addtional headers.
+                "/ID:\\Algorithms\\Tour to C++\\Chapter3\\Bezier-Curve\\freeglut\\include",
+                //"/Fe:Chapter3.exe",             //Name of executable
+                "${fileDirname}\\bezierCurve.cpp",
+                //"${fileDirname}\\bezierMath.cpp",
+                "${fileDirname}\\bezierFile.cpp",
+                "${fileDirname}\\bezierSurface.cpp",
+                "${fileDirname}\\${fileBasenameNoExtension}.cpp",
+                "freeglut.lib",
+                "bezierMath.lib"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

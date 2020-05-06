@@ -1,0 +1,7 @@
+/EHa
+"/ID:\\Algorithms\\Tour to C++\\Chapter3\\Bezier-Curve\\freeglut\\include"
+/I..
+/Fe:BezierCurve.exe
+bezierCurve.lib
+freeglut.lib
+main.cpp
