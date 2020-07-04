@@ -65,7 +65,7 @@ void PrintMap(const map<KEY,T>& M)
 }
 
 
-void main()
+int main()
 {
 // For remind how STL containers work look at Complexity table and CppReference methods
 // Smart pointers (unique_ptr, weak_ptr, shared_ptr)
@@ -237,7 +237,6 @@ void main()
     stack<int> st;
     for (auto n : {3,2,1})
         st.push(n);
-
     
 
     while(!st.empty())
@@ -246,5 +245,5 @@ void main()
         st.pop();
     }
 
-
+    return 0;
 }
