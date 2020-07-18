@@ -41,13 +41,13 @@ int main()
     }*/
 
     // Working with istringstream
-    /*istringstream input{ "  Who knows; how long I’ve; loved you \n\
+    istringstream input{ "  Who knows; how long I have; loved you \n\
                             You know; I love you still; \n\
                             Will I wait a lonely; lifetime \n\
-                            If you want me to, I will \n"   };
+                            If you want me to, I will\n"   };
 
     // cout << input.str();
-    cout << input.tellg() << endl;
+    /*cout << input.tellg() << endl;
     for (string buff; getline(input, buff, ';');)
     {
         // cout << input.tellg() << endl;
@@ -70,7 +70,7 @@ int main()
     cerr.tellp();*/
 
     // Stream error handling
-    istringstream inStr{"Hello worl"};
+    /*istringstream inStr{"Hello world"};
     ifstream in("df.df");
     cout << ((in) ? "true" : "false") << endl;
     cout << boolalpha << inStr.good() << endl;
@@ -81,11 +81,20 @@ int main()
         inStr.get(c);
         cout.put(c);
     }
+
+    string buffer;
+    while(input >> buffer)
+        cout << buffer <<endl;*/
+
+    // Some monipulation with stream
+    ostringstream output;
+    output << input.str();
+    cout << output.str();
         
 
     
 
-    system("pause");
+ 
     return 0;
 
 }
