@@ -3,13 +3,52 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include <sstream>
 #include <fstream>
 
 using namespace std;
 
 
-int main()
+class Point3d
+{
+public:
+    Point3d() : x(-1), y(-1), z(-1){}
+    Point3d(double x, double y, double z) : x(x), y(y), z(z){}
+    friend ostream& operator<<(ostream& out, Point3d& point);
+    friend istream& operator>>(istream& in, Point3d& point);
+private:
+    double x;
+    double y;
+    double z;
+};
+
+ostream& operator<<(ostream& out, Point3d& point)
+{
+    cout << "Point(" << point.x << ", " << point.y << ", " << point.z << ")";
+}
+
+istream& operator>>(istream& in, Point3d& point)
+{
+    in >> point.x;
+    in >> point.y;
+    in >> point.z;
+    return in;
+}
+
+
+void PrintVersionOfStandard()
+{
+    // For __cplusplus macro return correct macro, you need pass /Zc:__cplusplus option to compiler
+    // Pass /std:c++17 parameter to compiler for changing standard
+    if (__cplusplus == 201703L) std::cout << "C++17\n";
+    else if (__cplusplus == 201402L) std::cout << "C++14\n";
+    else if (__cplusplus == 201103L) std::cout << "C++11\n";
+    else if (__cplusplus == 199711L) std::cout << "C++98\n";
+    else std::cout << "pre-standard C++\n";
+}
+
+int main(int argc, char** argv)
 {
     string buff{ "Hello world" };
 
@@ -87,14 +126,50 @@ int main()
         cout << buffer <<endl;*/
 
     // Some monipulation with stream
-    ostringstream output;
+    /*ostringstream output;
     output << input.str();
-    cout << output.str();
+    cout << output.str();*/
         
+    // Multidimentional arryas
+    /*int mat[10][5];
+    for (int i(0); i<10; i++)
+        for (int j(0); j<5; j++)
+            mat[i][j] = i+j+1;
 
+    for (int i(0); i<10; i++) {
+        for (int j(0); j<5; j++)
+            cout << mat[i][j] << '\t';
+        cout << endl;
+    }
+
+    int anotherMat[3][3] {{1,2,3},{4,5,6},{7,8,9}};
+    cout << *(anotherMat[2]);*/
+
+    // Stream operators for user-defined class
+    /*Point3d a(1.5,2.5,3.5);
+    Point3d b(2.2,3.4,5.6);
+
+    cout << a << endl;
+    cout << b << endl;*/
+
+    ifstream pointsFile("../Points.txt");
+    if (!pointsFile.is_open()) {
+        cout << "Failed to open Points.txt" << endl;
+        return -1;
+    }
+
+    vector<Point3d> points;
+    while(!pointsFile.eof())
+    {
+        Point3d point;
+        pointsFile >> point;
+        points.push_back(point);
+    }
     
+    for (auto& p : points)
+        cout << p << endl;
 
- 
+
     return 0;
 
 }
