@@ -23,9 +23,10 @@ private:
     double z;
 };
 
-ostream& operator<<(ostream& out, Point3d& point)
+ostream& operator<<(ostream& os, Point3d& point)
 {
-    cout << "Point(" << point.x << ", " << point.y << ", " << point.z << ")";
+    os << "Point(" << point.x << ", " << point.y << ", " << point.z << ")";
+    return os;
 }
 
 istream& operator>>(istream& in, Point3d& point)
@@ -152,7 +153,9 @@ int main(int argc, char** argv)
     cout << a << endl;
     cout << b << endl;*/
 
-    ifstream pointsFile("../Points.txt");
+    string pointsPath;
+    pointsPath = argc > 1 ? argv[1] : "Points.txt";
+    ifstream pointsFile(pointsPath);
     if (!pointsFile.is_open()) {
         cout << "Failed to open Points.txt" << endl;
         return -1;
@@ -169,7 +172,6 @@ int main(int argc, char** argv)
     for (auto& p : points)
         cout << p << endl;
 
-
+    cin.get();
     return 0;
-
 }
