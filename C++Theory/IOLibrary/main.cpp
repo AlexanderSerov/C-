@@ -1,11 +1,10 @@
-// LearningC++.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
 #include <string>
 #include <vector>
 #include <sstream>
 #include <fstream>
+#include <iomanip>
+#include <thread>
 
 using namespace std;
 
@@ -13,8 +12,8 @@ using namespace std;
 class Point3d
 {
 public:
-    Point3d() : x(-1), y(-1), z(-1){}
-    Point3d(double x, double y, double z) : x(x), y(y), z(z){}
+    Point3d() : x(-1), y(-1), z(-1) {}
+    explicit Point3d(double x, double y, double z) : x(x), y(y), z(z) {}
     friend ostream& operator<<(ostream& out, Point3d& point);
     friend istream& operator>>(istream& in, Point3d& point);
 private:
@@ -37,6 +36,17 @@ istream& operator>>(istream& in, Point3d& point)
     return in;
 }
 
+ostream & fl(ostream & os)
+{
+    os << "Hello world!";
+    return os;
+}
+
+void func(Point3d p1, Point3d p2)
+{
+    cout << p1 << endl;
+    cout << p2 << endl;
+}
 
 void PrintVersionOfStandard()
 {
@@ -84,7 +94,7 @@ int main(int argc, char** argv)
     istringstream input{ "  Who knows; how long I have; loved you \n\
                             You know; I love you still; \n\
                             Will I wait a lonely; lifetime \n\
-                            If you want me to, I will\n"   };
+                            If you want me to, I will\n" };
 
     // cout << input.str();
     /*cout << input.tellg() << endl;
@@ -98,7 +108,7 @@ int main(int argc, char** argv)
 
     /*string str{ "Hello world!!" };
     for (const auto& ch : str) {
-        cout << ch;        
+        cout << ch;
     }
     cout << endl;*/
 
@@ -126,34 +136,34 @@ int main(int argc, char** argv)
     while(input >> buffer)
         cout << buffer <<endl;*/
 
-    // Some monipulation with stream
-    /*ostringstream output;
-    output << input.str();
-    cout << output.str();*/
-        
-    // Multidimentional arryas
-    /*int mat[10][5];
-    for (int i(0); i<10; i++)
-        for (int j(0); j<5; j++)
-            mat[i][j] = i+j+1;
+        // Some monipulation with stream
+        /*ostringstream output;
+        output << input.str();
+        cout << output.str();*/
 
-    for (int i(0); i<10; i++) {
-        for (int j(0); j<5; j++)
-            cout << mat[i][j] << '\t';
-        cout << endl;
-    }
+        // Multidimentional arryas
+        /*int mat[10][5];
+        for (int i(0); i<10; i++)
+            for (int j(0); j<5; j++)
+                mat[i][j] = i+j+1;
 
-    int anotherMat[3][3] {{1,2,3},{4,5,6},{7,8,9}};
-    cout << *(anotherMat[2]);*/
+        for (int i(0); i<10; i++) {
+            for (int j(0); j<5; j++)
+                cout << mat[i][j] << '\t';
+            cout << endl;
+        }
 
-    // Stream operators for user-defined class
-    /*Point3d a(1.5,2.5,3.5);
-    Point3d b(2.2,3.4,5.6);
+        int anotherMat[3][3] {{1,2,3},{4,5,6},{7,8,9}};
+        cout << *(anotherMat[2]);*/
 
-    cout << a << endl;
-    cout << b << endl;*/
+        // Stream operators for user-defined class
+        /*Point3d a(1.5,2.5,3.5);
+        Point3d b(2.2,3.4,5.6);
 
-    string pointsPath;
+        cout << a << endl;
+        cout << b << endl;*/
+
+    /*string pointsPath;
     pointsPath = argc > 1 ? argv[1] : "Points.txt";
     ifstream pointsFile(pointsPath);
     if (!pointsFile.is_open()) {
@@ -162,15 +172,80 @@ int main(int argc, char** argv)
     }
 
     vector<Point3d> points;
-    while(!pointsFile.eof())
+    while (!pointsFile.eof())
     {
         Point3d point;
         pointsFile >> point;
         points.push_back(point);
     }
-    
+
     for (auto& p : points)
-        cout << p << endl;
+        cout << p << endl;*/
+
+    
+    // Redefine stream manupulator 
+    // cout << fl << endl;
+
+    // MANIPULATORS
+    /*cout << boolalpha << true << noboolalpha << endl;
+    cout << true;
+
+    // You can see difference with flushes only on Linux machine.
+    for (int i(0); i < 5; i++)
+    {
+        cout << i << ' ' << flush;
+        this_thread::sleep_for(chrono::seconds(1));
+    }*/
+
+    /*cout << setbase(16) << showbase << 110 << endl;
+
+    cout << setbase(16) << showbase << left << setfill('*');
+    cout << setw(10) << 25 << setw(10) << 13 << setw(10) << 45 << endl;
+
+    double pi = 3.14334563573463467567;
+    cout << setprecision(15) << pi << endl;*/
+
+    /*stringstream ss;
+    cout << quoted("Hello \"world\"") << endl;
+    ss << quoted("Hello \"world\"");
+    string str;
+    ss >> quoted(str);
+    cout << str << endl;*/
+
+    /*string TextPath = argc > 1 ? argv[1] : "Text.txt";
+    ifstream pointsFile(TextPath);
+    if (!pointsFile.is_open()) {
+        cout << "Failed to open Text.txt" << endl;
+        return -1;
+    }
+
+    cout << pointsFile.rdbuf();*/
+
+    /*istringstream ss{"1.55"};
+    long double money;
+    ss.imbue(std::locale("ru_RU.UTF-8"));
+    ss >> get_money(money, true);
+    cout << money << endl;*/
+
+    // ERROR HANDLING
+    /*string str;
+    std::ifstream f("doesn't exist");
+    try {
+        f.exceptions(f.failbit);
+    }
+    catch (const std::ios_base::failure& ex) {
+        cout << ex.code() << endl;
+    }
+    catch (...) {
+        cout << "Catch all!" << endl;
+    }*/
+
+    // ios_base;
+
+    vector<int> v(3);
+    cout << v[1] << endl;
+
+    func(Point3d{ 1,2,3 }, Point3d{ 3,2,1 });
 
     cin.get();
     return 0;
