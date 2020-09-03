@@ -59,6 +59,48 @@ void PrintVersionOfStandard()
     else std::cout << "pre-standard C++\n";
 }
 
+struct BinaryProfile {
+    int age;
+    bool male;
+    float weight;
+    string FullName;
+    friend ostream& operator<<(ostream& os, BinaryProfile& bp);
+    friend istream& operator>>(istream& in, BinaryProfile& bp);
+};
+
+ostream& operator<<(ostream& os, BinaryProfile& bp)
+{
+    size_t len = bp.FullName.size();
+    os.write((char*)&bp.age, sizeof(bp.age));
+    os.write((char*)&bp.male, sizeof(bp.male));
+    os.write((char*)&bp.weight, sizeof(bp.weight));
+    os.write((char*)&len, sizeof(len));
+    os.write(bp.FullName.data(), bp.FullName.size());
+    return os << flush;
+}
+
+istream& operator>>(istream& in, BinaryProfile& bp)
+{
+    in.read((char*)&bp.age, sizeof(bp.age));
+    in.read((char*)&bp.male, sizeof(bp.male));
+    in.read((char*)&bp.weight, sizeof(bp.weight));
+    size_t len;
+    in.read((char*)&len, sizeof(len));
+    char* temp = new char[len + 1];
+    in.read(temp, len);
+    temp[len] = '\0';
+    bp.FullName = temp;
+    delete[] temp;
+    return in;
+}
+
+struct Ass
+{
+    int data1;
+    double data2;
+};
+
+
 int main(int argc, char** argv)
 {
     string buff{ "Hello world" };
@@ -240,12 +282,91 @@ int main(int argc, char** argv)
         cout << "Catch all!" << endl;
     }*/
 
-    // ios_base;
 
-    vector<int> v(3);
-    cout << v[1] << endl;
+    // BINARY READ/WRITE
+    
+    BinaryProfile Peter;
+    Peter.age = 28;
+    Peter.male = true;
+    Peter.weight = 65.3;
+    Peter.FullName = "Peter Yan";
 
-    func(Point3d{ 1,2,3 }, Point3d{ 3,2,1 });
+    /*ofstream of("D:/Repos/CPlusPlus/C++Theory/IOLibrary/Binary");
+    if (!of.is_open()) {
+        cout << "Failed to open" << endl;
+        cin.get();
+        return -1;
+    }
+
+    size_t len = Peter.FullName.size();
+    of.write((char*)&Peter.age, sizeof(Peter.age));
+    of.write((char*)&Peter.male, sizeof(Peter.male));
+    of.write((char*)&Peter.weight, sizeof(Peter.weight));
+    of.write((char*)&len, sizeof(len));
+    of.write(Peter.FullName.data(), Peter.FullName.size());*/
+
+    /*BinaryProfile Peter;
+
+    ifstream iff("D:/Repos/CPlusPlus/C++Theory/IOLibrary/Binary");
+    if (!iff.is_open()) {
+        cout << "Failed to open" << endl;
+        cin.get();
+        return -1;
+    }
+    
+    iff.read((char*)&Peter.age, sizeof(Peter.age));
+    iff.read((char*)&Peter.male, sizeof(Peter.male));
+    iff.read((char*)&Peter.weight, sizeof(Peter.weight));
+    size_t len;
+    iff.read((char*)&len, sizeof(len));
+    char* temp = new char[len+1];
+    iff.read(temp, len);
+    temp[len] = '\0';
+    Peter.FullName = temp;
+    delete[] temp;*/
+
+    /*BinaryProfile Peter;
+    Peter.age = 28;
+    Peter.male = true;
+    Peter.weight = 65.3;
+    Peter.FullName = "Peter Yan";
+
+    ofstream of("D:/Repos/CPlusPlus/C++Theory/IOLibrary/Binary");
+    if (!of.is_open()) {
+        cout << "Failed to open" << endl;
+        cin.get();
+        return -1;
+    }
+
+    of << Peter;
+    of.close();
+
+    ifstream iff("D:/Repos/CPlusPlus/C++Theory/IOLibrary/Binary");
+    BinaryProfile Peter2;
+    iff >> Peter2;
+    iff.close();*/
+
+    // Reading and Writing intire object.
+    // Only works with trivial data.
+    /*Ass A;
+    A.data1 = 4;
+    A.data2 = 6.7;
+    Ass B;
+
+    fstream fs("D:/Repos/CPlusPlus/C++Theory/IOLibrary/Binary", ios::in | ios::out | ios::binary);
+    fs.write((char*)&A, sizeof(Ass));
+    fs.flush();
+    fs.seekg(0);
+    fs.read((char*)&B, sizeof(Ass));*/
+
+    // if (in >> som >> var >> another) check on consistency. We can observe bad behaviour.
+    /*int a(2), b(2), c(2), d(2), e(2);
+    ifstream fs("D:/Repos/CPlusPlus/C++Theory/IOLibrary/Text.txt");
+    if (fs >> a >> b >> c >> d >> e)
+        cout << "OK!" << endl;
+    else cout << "Not good!" << endl;*/
+
+
 
     cin.get();
     return 0;
