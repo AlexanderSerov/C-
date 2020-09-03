@@ -359,13 +359,6 @@ int main(int argc, char** argv)
     fs.seekg(0);
     fs.read((char*)&B, sizeof(Ass));*/
 
-    // if (in >> som >> var >> another) check on consistency. We can observe bad behaviour.
-    /*int a(2), b(2), c(2), d(2), e(2);
-    ifstream fs("D:/Repos/CPlusPlus/C++Theory/IOLibrary/Text.txt");
-    if (fs >> a >> b >> c >> d >> e)
-        cout << "OK!" << endl;
-    else cout << "Not good!" << endl;*/
-
 
 
     cin.get();
