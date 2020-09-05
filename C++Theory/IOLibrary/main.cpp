@@ -4,7 +4,9 @@
 #include <sstream>
 #include <fstream>
 #include <iomanip>
+#include <iterator>
 #include <thread>
+#include <algorithm>
 
 using namespace std;
 
@@ -14,15 +16,14 @@ class Point3d
 public:
     Point3d() : x(-1), y(-1), z(-1) {}
     explicit Point3d(double x, double y, double z) : x(x), y(y), z(z) {}
-    friend ostream& operator<<(ostream& out, Point3d& point);
+    friend ostream& operator<<(ostream& out, const Point3d& point);
     friend istream& operator>>(istream& in, Point3d& point);
-private:
     double x;
     double y;
     double z;
 };
 
-ostream& operator<<(ostream& os, Point3d& point)
+std::ostream& operator<<(std::ostream& os, const Point3d& point)
 {
     os << "Point(" << point.x << ", " << point.y << ", " << point.z << ")";
     return os;
@@ -213,13 +214,7 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    vector<Point3d> points;
-    while (!pointsFile.eof())
-    {
-        Point3d point;
-        pointsFile >> point;
-        points.push_back(point);
-    }
+    vector<Point3d> points((std::istream_iterator<Point3d>(pointsFile)), std::istream_iterator<Point3d>());
 
     for (auto& p : points)
         cout << p << endl;*/
@@ -358,6 +353,41 @@ int main(int argc, char** argv)
     fs.flush();
     fs.seekg(0);
     fs.read((char*)&B, sizeof(Ass));*/
+
+    // ### stream_iterator ###  You can use stream with any algorighm
+    // ifstream pointsFile("D:/Repos/CPlusPlus/C++Theory/IOLibrary/Points.txt");
+
+    // vector<Point3d> points;
+    /*std::copy(std::istream_iterator<Point3d>(pointsFile),
+        std::istream_iterator<Point3d>(),
+        std::back_inserter(points));
+
+    /*for (auto& p : points)
+        cout << p << endl;*/
+
+    // Print only Points which coordinates less than 10
+    /*ostringstream oss;
+    std::remove_copy_if(points.begin(), points.end(),
+        std::ostream_iterator<Point3d>(oss, "\n"), [](Point3d& point) 
+        {
+            return point.x >= 10 || point.y >= 10 || point.z >= 10;
+        });
+    
+    cout << oss.str();*/
+
+    // The above code in less lines
+    /*std::remove_copy_if(std::istream_iterator<Point3d>(pointsFile),
+        std::istream_iterator<Point3d>(),
+        std::ostream_iterator<Point3d>(std::cout, "\n"), [](const Point3d& point)
+    {
+        return point.x >= 10 || point.y >= 10 || point.z >= 10;
+    });*/
+
+    // Work manually with iterators
+    /*auto it = std::istream_iterator<Point3d>(pointsFile);
+    it++;
+    cout << *it << endl;*/
+
 
 
 
