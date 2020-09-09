@@ -245,5 +245,7 @@ int main()
         st.pop();
     }
 
+    cin.get();
+
     return 0;
 }
