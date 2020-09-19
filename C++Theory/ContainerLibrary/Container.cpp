@@ -10,6 +10,10 @@
 #include <map>
 #include <stack>
 #include <queue>
+#include <functional>
+#include <string>
+#include <unordered_set>
+#include <unordered_map>
 
 using namespace std;
 
@@ -33,11 +37,11 @@ void Revese(T first, T last)
     }
 }
 
-template <typename T>
-void PrintContainer(const forward_list<T>& cont)
+template <typename T, template <class _Ty, class _Alloc = allocator<_Ty>> class Container>
+void PrintContainer(const Container<T>& cont)
 {
     for (T n : cont)
-        cout << n;
+        cout << n << " ";
     cout << endl;
 }
 
@@ -63,6 +67,12 @@ void PrintMap(const map<KEY,T>& M)
     for (auto& m : M)
         cout << m.first << " : " << m.second << endl;
 }
+
+struct Person
+{
+    int id;
+    std::string name;
+};
 
 
 int main()
@@ -234,7 +244,7 @@ int main()
     cout << mmp.find(2)->second << endl;*/
 
 // std::stack
-    stack<int> st;
+    /*stack<int, std::list<int>> st;
     for (auto n : {3,2,1})
         st.push(n);
     
@@ -244,6 +254,83 @@ int main()
         cout << st.top() << ' ';
         st.pop();
     }
+
+    auto cont = st._Get_container();
+
+    PrintContainer(cont);*/
+
+
+ // priority_queue
+    /*priority_queue<int,vector<int>,less<int>> pq{less<int>(),{5,8,3}};
+
+    while (!pq.empty())
+    {
+        const auto& p = pq.top();
+        cout << p << "\n";
+        pq.pop();
+    }
+
+    std::vector<Person> persons{ {3, "Alex"}, {1, "Jon"}, {12, "Ben"} };
+    auto comp = [](const Person& lhs, const Person& rhs) { return lhs.id < rhs.id; };
+    std::priority_queue<Person, vector<Person>, decltype(comp)> persons_queue(comp, persons);
+
+    while (!persons_queue.empty())
+    {
+        const auto& p = persons_queue.top();
+        cout << p.id << " : " << p.name << "\n";
+        persons_queue.pop();
+    }*/
+
+
+// ########## Heap operations ########## 
+    /*std::vector<int> v{ 3, 1, 4, 1, 5, 9 };
+
+    std::make_heap(v.begin(), v.end());
+
+    v.push_back(7);
+    std::push_heap(v.begin(), v.end());
+
+    std::pop_heap(v.begin(), v.end());
+    int largest = v.back();
+    v.pop_back();
+
+    cout << "is_heap: " << boolalpha << std::is_heap(v.begin(), v.end()) << endl;
+
+    v.push_back(4);
+    v.push_back(1);
+    auto endIt = std::is_heap_until(v.begin(), v.end());
+
+    sort_heap(v.begin(), v.end());
+    PrintContainer(v);*/
+
+   
+// ########## UNORDERED CONTAINERS ##########
+    const std::unordered_set<std::string> op_names_{ "Convolution", "Activation", "asdfasdf" };
+
+    for (auto i : op_names_)
+        cout << i << endl;
+    cout << endl;
+
+    std::unordered_map<std::string, bool> LegitimateUsers{ { {"Sam", true}, {"Alex", false}, {"Any", true} } };
+    for (const auto& user : LegitimateUsers)
+        cout << user.first << " : " << boolalpha << user.second << endl;
+    cout << endl;
+
+    cout << "LegitimateUsers summary:" << endl;
+    cout << "bucket_count : " << LegitimateUsers.bucket_count() << endl;
+    cout << "max_bucket_count : " << LegitimateUsers.max_bucket_count() << endl;
+    cout << "Numeber of elements in \"Sam\" bucket : " << LegitimateUsers.bucket_size(LegitimateUsers.bucket("Sam")) << endl;
+    cout << "Actual load_factor : " << LegitimateUsers.load_factor() << endl;
+    cout << "max_load_factor : " << LegitimateUsers.max_load_factor() << endl;
+    LegitimateUsers.reserve(11);
+    cout << "bucket_count after reserving : " << LegitimateUsers.bucket_count() << endl;
+    cout << "load_factor after reserving : " << LegitimateUsers.load_factor() << endl;   
+
+
+// ########## SPAN ##########
+// ...
+
+
 
     cin.get();
 
