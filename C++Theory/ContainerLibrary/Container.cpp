@@ -14,6 +14,7 @@
 #include <string>
 #include <unordered_set>
 #include <unordered_map>
+#include <span>
 
 using namespace std;
 
@@ -328,8 +329,10 @@ int main()
 
 
 // ########## SPAN ##########
-// ...
-
+    constexpr int a[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+    std::span{a};
+    std::vector<int> v {1, 2, 3};
+    PrintContainer(v);
 
 
     cin.get();
