@@ -15,6 +15,8 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <span>
+#include <iomanip>
+#include <cstddef>
 
 using namespace std;
 
@@ -74,6 +76,22 @@ struct Person
     int id;
     std::string name;
 };
+
+void spanFunc(std::span<const int> sp)
+{
+    for (const auto& n : sp)
+        cout << n << " ";
+}
+
+void print(float const x, std::span<const std::byte> const bytes)
+{
+    std::cout << std::setprecision(6) << std::setw(8)
+              << x << " = { " << std::hex << std::showbase;
+    for (auto const b : bytes) {
+        std::cout << std::to_integer<int>(b) << ' ';
+    }
+    std::cout << std::dec << "}\n";
+}
 
 
 int main()
@@ -306,7 +324,7 @@ int main()
 
    
 // ########## UNORDERED CONTAINERS ##########
-    const std::unordered_set<std::string> op_names_{ "Convolution", "Activation", "asdfasdf" };
+    /*const std::unordered_set<std::string> op_names_{ "Convolution", "Activation", "asdfasdf" };
 
     for (auto i : op_names_)
         cout << i << endl;
@@ -325,14 +343,27 @@ int main()
     cout << "max_load_factor : " << LegitimateUsers.max_load_factor() << endl;
     LegitimateUsers.reserve(11);
     cout << "bucket_count after reserving : " << LegitimateUsers.bucket_count() << endl;
-    cout << "load_factor after reserving : " << LegitimateUsers.load_factor() << endl;   
+    cout << "load_factor after reserving : " << LegitimateUsers.load_factor() << endl;   */
 
 
 // ########## SPAN ##########
     constexpr int a[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
-    std::span{a};
-    std::vector<int> v {1, 2, 3};
-    PrintContainer(v);
+    std::span sp{a};
+    cout << "Static extent: " << sp.extent << endl;
+
+    vector<int> v{1,2,3,4};
+    std::span sp1 {v.begin(), v.end()};
+    cout << "Dynamic extent: " << sp1.extent << endl;
+
+    spanFunc(a);
+
+    float fArr[] {2.45};
+    auto const_bytes = as_bytes(std::span<float>(fArr));
+
+    print(fArr[0], const_bytes);
+
+
+
 
 
     cin.get();
