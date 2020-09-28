@@ -1,12 +1,14 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <string>
 
 using namespace std;
 
 // Agenda:
 // Name hiding
 // Copy constructor
+// Move constructor
 // emplace method
 // assign operator overload over class hierarchy
 // Methods of empty struct
@@ -15,10 +17,10 @@ struct Empty{};
 
 class A
 {
-protected:
+public:
     int data;
     int* numbers;
-public:
+
     A(int data) : data(data), numbers(new int[data]) 
     {
         for (int i(0); i < data; i++)
@@ -30,6 +32,11 @@ public:
         memcpy(numbers, other.numbers, data*sizeof(int));
     }
 
+    A(A&& other) : data(other.data), numbers(nullptr)
+    {
+        std::swap(numbers, other.numbers);
+    }
+
     A& operator=(const A& other)
     {
         data = other.data;
@@ -39,6 +46,21 @@ public:
         memcpy(numbers, other.numbers, data*sizeof(int));
         return *this;
     }
+
+    A& operator=(A&& other)
+    {
+        data = other.data;
+        std::swap(numbers, other.numbers);
+        return *this;
+    }
+
+    // Unified assignment operator
+    /*A& operator=(A other)
+    {
+        data = std::exchange(other.data, 0);
+        std::swap(numbers, other.numbers);
+        return *this;
+    }*/
 
     int GetData(int a)
     {
@@ -110,4 +132,13 @@ void main()
     Empty g;
     Empty h;
     a = b;
-}
+
+
+    // Move semantic
+    A aa(5);
+    A bb(std::move(aa));
+
+    A aaa(5);
+    A bbb(std::move(aaa));
+
+    cin.get();
