@@ -7,8 +7,8 @@
 #include <iterator>
 #include <thread>
 #include <algorithm>
-#include <io.h>
-#include <fcntl.h>
+// #include <io.h>
+// #include <fcntl.h>
 
 
 using namespace std;
