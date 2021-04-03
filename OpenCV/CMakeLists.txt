@@ -3,6 +3,6 @@ project(Squares VERSION 0.1.0)
 
 find_package(OpenCV REQUIRED)
 
-add_executable(Squares OpenCVHelloWorld.cpp)
+add_executable(Squares Playground.cpp)
 
 target_link_libraries(Squares ${OpenCV_LIBS})

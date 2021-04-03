@@ -1,0 +1,8 @@
+#cmakedefine mynum
+#cmakedefine CMAKE_CXX_STANDARD "12"
+#cmakedefine CMAKE_CXX "12"
+
+$<TARGET_FILE:cmakePlayground>
+#define @mynum@
+#define @CMAKE_CXX_STANDARD@
+#define @adfdsf@

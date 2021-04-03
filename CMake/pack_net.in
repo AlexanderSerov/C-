@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+set -x
+
+rm -f @PACK_NET_OUTPUT@
+$<TARGET_FILE:net_packer> --pack @NN_FILES_STR@ --output @PACK_NET_OUTPUT@
