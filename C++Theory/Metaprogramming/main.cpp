@@ -19,18 +19,18 @@ int main() {
     cout << 2 << endl;
 
     static_assert(print(2) == 4);
-    static_assert(print(2) == 4);
-    static_assert(print(2) == 4);static_assert(print(2) == 4);
-    static_assert(print(2) == 4);
-    static_assert(print(2) == 4);
-    static_assert(print(2) == 4);
-    static_assert(print(2) == 4);
-    static_assert(print(2) == 4);
-    static_assert(print(2) == 4);
-    static_assert(print(2) == 4);
-    static_assert(print(2) == 4);
-    static_assert(print(2) == 4);
-    static_assert(print(2) == 4);
+//    static_assert(print(2) == 4);
+//    static_assert(print(2) == 4);static_assert(print(2) == 4);
+//    static_assert(print(2) == 4);
+//    static_assert(print(2) == 4);
+//    static_assert(print(2) == 4);
+//    static_assert(print(2) == 4);
+//    static_assert(print(2) == 4);
+//    static_assert(print(2) == 4);
+//    static_assert(print(2) == 4);
+//    static_assert(print(2) == 4);
+//    static_assert(print(2) == 4);
+//    static_assert(print(2) == 4);
 
     // static_assert(print<2>() == 4);       Not legitimate!!! constexpr only
 
