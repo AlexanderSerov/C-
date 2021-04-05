@@ -35,7 +35,7 @@ template<typename T, std::size_t N>
 auto dotProductMeta(std::array<T, N> const& x,
                 std::array<T, N> const& y)
 {
-    return DotProductT<T, N>::result(x.begin()._Unwrapped(), y.begin()._Unwrapped());
+    return DotProductT<T, N>::result(&(*x.begin()), &(*y.begin()));
 }
 
 template<typename T, std::size_t N>
@@ -87,7 +87,6 @@ int main() {
     t2 = high_resolution_clock::now();
     ms_double = t2 - t1;
     cout << "Time: " << ms_double.count() << endl;
-
 
     return 0;
 }
