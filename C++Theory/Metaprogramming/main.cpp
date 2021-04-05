@@ -12,24 +12,16 @@ int print() {
     return in + 2;
 }
 
+int f();
+
 int main() {
 
     cout << print(3) << endl;
     cout << print<2>() << endl;
+    cout << print<4>() << endl;
 
     static_assert(print(2) == 4);
-//    static_assert(print(2) == 4);
-//    static_assert(print(2) == 4);static_assert(print(2) == 4);
-//    static_assert(print(2) == 4);
-//    static_assert(print(2) == 4);
-//    static_assert(print(2) == 4);
-//    static_assert(print(2) == 4);
-//    static_assert(print(2) == 4);
-//    static_assert(print(2) == 4);
-//    static_assert(print(2) == 4);
-//    static_assert(print(2) == 4);
-//    static_assert(print(2) == 4);
-//    static_assert(print(2) == 4);
+    std::cout << std::is_function<decltype(f)>::value << '\n';
 
     // static_assert(print<2>() == 4);       Not legitimate!!! constexpr only
 
