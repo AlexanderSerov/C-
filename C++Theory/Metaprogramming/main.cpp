@@ -68,7 +68,7 @@ int main() {
     using std::chrono::duration;
     using std::chrono::milliseconds;
 
-    const size_t N = 1023;
+    const size_t N = 850;
     std::array<double, N> x;
     std::array<double, N> y;
 
