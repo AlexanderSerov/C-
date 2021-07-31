@@ -4,4 +4,4 @@ set -e
 set -x
 
 rm -f out.sh
-D:/Repos/CPlusPlus/CMake/cmake-build-debug/net_packer.exe --pack a b c --output out.sh
+D:/Repos/CPlusPlus/CMake/cmake-build-debug-visual-studio/net_packer.exe --pack a b c --output out.sh

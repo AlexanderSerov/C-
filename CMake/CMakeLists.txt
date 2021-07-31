@@ -198,3 +198,87 @@ file(GENERATE
 	INPUT ${CMAKE_SOURCE_DIR}/pack_net.out
 	)
 
+
+######### files_exist test #########
+function(files_exist files)
+	foreach(file ${files})
+		message(STATUS ${file})
+		if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
+			message(FATAL_ERROR "Can't find source file: " ${file} )
+		endif()
+	endforeach()
+endfunction()
+
+list(APPEND files foo.h foo.h.in)
+
+if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/foo.h)
+	message(FATAL_ERROR "Can't : foo.h" )
+endif()
+
+#foreach(file ${files})
+#	message(STATUS ${file})
+#	if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
+#		message(FATAL_ERROR "Can't find source file: " ${file} )
+#	endif()
+#endforeach()
+
+# Quote the variable as you pass it to the function
+files_exist("${files}")
+
+### Scope ###
+if (TRUE)
+	set(myvarr 1)
+endif ()
+message(STATUS ${myvarr})
+
+###
+set(OpenMP_RTL_LINK_FLAGS "-fopenmp")
+set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "${OpenMP_RTL_LINK_FLAGS} -Wl,--gc-sections -Wl,--exclude-libs,ALL")
+
+
+
+function(setup_target_properties)
+
+	cmake_parse_arguments(
+			TARGET
+			"USES_MXNET"
+			"NAME"
+			"DEPENDS"
+			${ARGN}
+	)
+
+	setup_target_options(${TARGET_NAME})
+
+endfunction()
+
+function(setup_target_options NAME)
+
+	#cmake_parse_arguments(
+	#	TARGET
+	#	"NAME"
+	#	${ARGN}
+	#)
+
+	if(WIN32)
+
+		target_compile_options(${NAME} PRIVATE "/openmp")
+	elseif(ANDROID)
+
+		target_compile_options(${NAME} PRIVATE "-fopenmp" "-fPIC")
+	elseif(IOS)
+
+		target_compile_options(${NAME} PRIVATE "-fPIC")
+	elseif(APPLE)
+
+		target_compile_options(${NAME} PRIVATE "-fPIC")
+	elseif(UNIX)
+
+		target_compile_options(${NAME} PRIVATE "-fopenmp" "-fPIC")
+	endif()
+endfunction()
+
+setup_target_properties(
+		NAME
+			cmakePlayground
+)
+
