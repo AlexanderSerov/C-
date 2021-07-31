@@ -4,6 +4,7 @@
 #include <initializer_list>
 #include <iterator>
 #include <vector>
+#include <ciso646>
 
 using namespace std;
 
@@ -30,7 +31,7 @@ int main() {
 //  cout << "Addition: " << add ("sdfsd"s, "sdfsdf"s) << endl;
 
 
-
+  cout << boolalpha << not true << endl;
 
 
   return 0;
