@@ -8,6 +8,9 @@
  * 4) If you use CLion you just need to specify desired, preconfigured toolset.
  * */
 #include <iostream>
+#include <memory>
+#include <vector>
+#include <cuda_runtime.h>
 
 
 // Kernel function to add the elements of two arrays
@@ -20,8 +23,45 @@ void add(int n, const float *x, float *y)
 		y[i] = x[i] + y[i];
 }
 
+template <typename T>
+std::unique_ptr<T[], cudaError_t(*)(void *)> vector_to_cuda_memory(const std::vector<T>& vec) {
+    // Calculate the size of the CUDA memory in bytes
+    size_t cuda_size = vec.size() * sizeof(T);
+
+    // Allocate CUDA memory using cudaMalloc
+    T* cuda_ptr = nullptr;
+    cudaError_t status = cudaMalloc(&cuda_ptr, cuda_size);
+    if (status != cudaSuccess) {
+        throw std::runtime_error("cudaMalloc failed");
+    }
+
+    // Copy the vector's data to CUDA memory using cudaMemcpy
+    status = cudaMemcpy(cuda_ptr, vec.data(), cuda_size, cudaMemcpyHostToDevice);
+    if (status != cudaSuccess) {
+        cudaFree(cuda_ptr);
+        throw std::runtime_error("cudaMemcpy failed");
+    }
+
+    // Create a unique_ptr to manage the CUDA memory with a custom deleter
+	return std::unique_ptr<T[], cudaError_t(*)(void *)>(cuda_ptr, cudaFree);
+}
+
+
 int main()
 {
+	std::vector<int> vec {1,2,3};
+	const int a[] {1,2,3};
+	const int b[] {4,5,6};
+	const int c[] {7,8,9};
+	const std::vector<const void*> void_vec{a, b, c};
+	{
+		auto ptr = vector_to_cuda_memory(vec);
+		auto ptr2 = vector_to_cuda_memory(void_vec);
+	}
+
+
+///////////////////////////////////////////////////////////////////
+
 	int N = 1<<20;
 	float *x, *y;
 
@@ -62,6 +102,9 @@ int main()
 	// Free memory
 	cudaFree(x);
 	cudaFree(y);
+
+	// For cuda-memcheck work correctly
+	cudaDeviceReset();
 
 	return 0;
 }

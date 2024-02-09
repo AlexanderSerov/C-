@@ -22,3 +22,5 @@ if(UNIX)
 endif()
 
 add_executable(AddVectors main.cu)
+
+#target_compile_options(AddVectors PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:-G>)
